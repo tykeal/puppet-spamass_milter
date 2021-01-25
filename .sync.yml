@@ -1,0 +1,18 @@
+---
+# Delete CI system configs we aren't going to use
+appveyor.yml:
+  delete: true
+.travis.yml:
+  delete: true
+
+# Spec config
+spec/spec_helper.rb:
+  coverage_report: true
+  hiera_config: hiera.yaml
+  mock_with: ':rspec'
+
+# extra gitignore lines
+.gitignore:
+  paths:
+    - .ruby-gemset
+    - .ruby-version

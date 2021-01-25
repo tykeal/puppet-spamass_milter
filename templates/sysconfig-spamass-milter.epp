@@ -1,0 +1,80 @@
+<%- |
+  # Required
+  Boolean $expand_user,
+  Boolean $no_modify_headers,
+  Boolean $no_modify_subject,
+  Variant[
+    Struct[{
+      path => Stdlib::Unixpath,
+    }],
+    Struct[{
+      port => Stdlib::Port,
+      host => Stdlib::Host,
+    }]] $socket,
+  Boolean $postfix_extension,
+
+  # Optional
+  Optional[Struct[{
+    debug           => Optional[Array[
+      Variant[
+        Enum['func', 'misc', 'net', 'poll', 'rcpt', 'spamc', 'str', 'uori'],
+        Integer[1, 3],
+    ]]],
+    default_account => Optional[Struct[{
+      defaultdomain => String,
+      defaultuser   => String,
+    }]],
+    ignore          => Optional[Array[Stdlib::IP::Address]],
+    rejectcode      => Optional[String],
+    rejectscore     => Optional[Integer],
+    rejecttext      => Optional[String],
+    sendmailpath    => Optional[Stdlib::Unixpath],
+    spamaddress     => Optional[Struct[{
+      address           => Pattern[/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/],
+      retain_recipients => Boolean,
+    }]],
+    spamcflags      => Optional[String],
+  }]] $options,
+| -%>
+# DO NOT EDIT: File managed by puppet
+
+### Override for your different local config if necessary
+#SOCKET=/run/spamass-milter/spamass-milter.sock
+<%- if !($postfix_extension) { -%>
+SOCKET=<% if $socket['port'] { -%><%
+  -%>inet:<%= $socket['port'] -%>@<%= $socket['host'] -%><%
+  } else { -%><%= $socket['path'] %><% } %>
+<%- } -%>
+
+### You may add configuration parameters here, see spamass-milter(1)
+###
+### Note that the -x option for expanding aliases and virtusertable entries
+### only works if spamass-milter is run as root; you will need to use
+### spamass-milter-root.service instead of spamass-milter.service if you
+### wish to do this but otherwise it's best to run as the unprivileged user
+### sa-milt by using the normal spamass-milter.service
+#EXTRA_FLAGS="-m -r 15"
+EXTRA_FLAGS="<%
+if $expand_user { %> -x<% }
+if $no_modify_headers { %> -M<% }
+if $no_modify_subject { %> -m<% }
+if $options {
+  if $options['debug'] { %> -d <%= join($options['debug'], ',') %><% }
+  if $options['default_account'] { %> -u <%= $options['default_account']['defaultuser']
+    %> -e <%= $options['default_account']['defaultdomain'] %><% }
+  if $options['ignore'] {
+    $options['ignore'].each |String $network| {
+      %> -i <%= $network %><%
+    }
+  }
+  if $options['rejectcode'] { %> -C <%= $options['rejectcode'] %><% }
+  if $options['rejectscore'] { %> -r <%= $options['rejectscore'] %><% }
+  if $options['rejecttext'] { %> -R \"<%= $options['rejecttext'] %>\"<% }
+  if $options['sendmailpath'] { %> -S <%= $options['sendmailpath'] %><% }
+  if $options['spamaddress'] {
+    if $options['spamaddress']['retain_recipients'] { %> -B<%
+    } else { %> -b<% } %> <%= $options['spamaddress']['address'] %><%
+  }
+  if $options['spamcflags'] { %> -- <%= $options['spamcflags'] %><% }
+}
+-%>"

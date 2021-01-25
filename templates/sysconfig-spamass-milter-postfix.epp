@@ -1,0 +1,18 @@
+<%- |
+  Variant[
+    Struct[{
+      path => Stdlib::Unixpath,
+    }],
+    Struct[{
+      port => Stdlib::Port,
+      host => Stdlib::Host,
+    }]] $socket,
+| -%>
+# DO NOT EDIT: File managed by puppet
+
+# For Postfix support, use a postfix-group-writable socket
+# for communication with the MTA
+SOCKET="<% if $socket['port'] { -%><%
+  -%>inet:<%= $socket['port'] -%>@<%= $socket['host'] -%><%
+  } else { -%><%= $socket['path'] %><% } %>"
+SOCKET_OPTIONS="-g postfix"

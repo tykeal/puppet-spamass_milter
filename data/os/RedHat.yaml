@@ -1,0 +1,8 @@
+---
+spamass_milter::config::socket:
+  path: /run/spamass-milter/postfix/sock
+# yamllint disable-line rule:line-length
+spamass_milter::config::postfix_extension: "%{alias('spamass_milter::install::postfix_extension')}"
+
+spamass_milter::install::postfix_extension: true
+spamass_milter::install::postfix_extension_package: spamass-milter-postfix

@@ -1,0 +1,16 @@
+---
+spamass_milter::config::expand_user: false
+spamass_milter::config::no_modify_headers: false
+spamass_milter::config::no_modify_subject: false
+spamass_milter::config::socket:
+  path: /run/spamass-milter/spamass-milter.sock
+
+spamass_milter::install::ensure: installed
+spamass_milter::install::manage_package: true
+spamass_milter::install::package_name: spamass-milter
+spamass_milter::install::postfix_extension: false
+
+spamass_milter::service::ensure: running
+spamass_milter::service::enable: true
+# yamllint disable-line rule:line-length
+spamass_milter::service::expand_user: "%{alias('spamass_milter::config::expand_user')}"
