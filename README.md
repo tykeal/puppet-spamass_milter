@@ -13,7 +13,7 @@
 
 ## Description
 [![Build
-Status](https://gitlab.com/tykeal/puppet-spamass_milter/badges/main/pipeline.svg)](https://gitlab.com/tykeal/puppet-spamss_milter/-/tree/main)
+Status](https://gitlab.com/tykeal/puppet-spamass_milter/badges/main/pipeline.svg)](https://gitlab.com/tykeal/puppet-spamass_milter/-/tree/main)
 
 This module installs and configures spamass-milter on a system. By default it
 sets up exactly the same configuration that just installing the packages would
