@@ -38,12 +38,12 @@ EXTRA_FLAGS=""
 SOCKET="/run/spamass-milter/postfix/sock"
 SOCKET_OPTIONS="-g postfix"
 ',
-        )
+          )
       }
 
       # Test different options
-      context "with expand_user set" do
-        context "with no options defined" do
+      context 'with expand_user set' do
+        context 'with no options defined' do
           let(:params) do
             {
               expand_user: true,
@@ -53,20 +53,20 @@ SOCKET_OPTIONS="-g postfix"
           it { is_expected.not_to compile }
         end
 
-        context "with options set, but not default_account" do
+        context 'with options set, but not default_account' do
           let(:params) do
             {
               expand_user: true,
               options: {
                 rejectscore: 3,
-              }
+              },
             }
           end
 
           it { is_expected.not_to compile }
         end
 
-        context "with options set, and default_account configured" do
+        context 'with options set, and default_account configured' do
           let(:params) do
             {
               expand_user: true,
@@ -74,83 +74,83 @@ SOCKET_OPTIONS="-g postfix"
                 default_account: {
                   defaultdomain: 'bar',
                   defaultuser: 'foo',
-                }
-              }
+                },
+              },
             }
           end
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=".* -x .*"$/)
+              .with_content(%r{^EXTRA_FLAGS=".* -x .*"$})
           }
         end
       end
 
-      context "with debug set" do
+      context 'with debug set' do
         let(:params) do
           {
             options: {
               debug: ['func'],
-            }
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-          .with_content(/^EXTRA_FLAGS=" -d func"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -d func"$})
         }
 
-        context "with more than debug" do
+        context 'with more than debug' do
           let(:params) do
             {
               options: {
                 debug: ['func', 'misc'],
-              }
+              },
             }
           end
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -d func,misc"$/)
+              .with_content(%r{^EXTRA_FLAGS=" -d func,misc"$})
           }
         end
       end
 
-      context "with default_account defined" do
+      context 'with default_account defined' do
         let(:params) do
           {
             options: {
               default_account: {
                 defaultdomain: 'bar',
                 defaultuser: 'foo',
-              }
-            }
+              },
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -u foo -e bar"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -u foo -e bar"$})
         }
       end
 
-      context "with ignore set" do
+      context 'with ignore set' do
         let(:params) do
           {
             options: {
               ignore: [
                 '127.0.0.1',
               ],
-            }
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -i 127.0.0.1"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -i 127.0.0.1"$})
         }
 
-        context "with more than one ignore set" do
+        context 'with more than one ignore set' do
           let(:params) do
             {
               options: {
@@ -158,138 +158,138 @@ SOCKET_OPTIONS="-g postfix"
                   '127.0.0.1',
                   '::1',
                 ],
-              }
+              },
             }
           end
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-              .with_content(/^EXTRA_FLAGS=" -i 127.0.0.1 -i ::1"$/)
+              .with_content(%r{^EXTRA_FLAGS=" -i 127.0.0.1 -i ::1"$})
           }
         end
       end
 
-      context "with reject code set" do
+      context 'with reject code set' do
         let(:params) do
           {
             options: {
-              rejectcode: 'foo'
-            }
+              rejectcode: 'foo',
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -C foo"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -C foo"$})
         }
       end
 
-      context "with reject score set" do
+      context 'with reject score set' do
         let(:params) do
           {
             options: {
               rejectscore: 15,
-            }
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -r 15"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -r 15"$})
         }
       end
 
-      context "with reject text set" do
+      context 'with reject text set' do
         let(:params) do
           {
             options: {
-              rejecttext: 'foo'
-            }
+              rejecttext: 'foo',
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -R \\"foo\\""$/)
+            .with_content(%r{^EXTRA_FLAGS=" -R \\"foo\\""$})
         }
       end
 
-      context "with sendmailpath set" do
+      context 'with sendmailpath set' do
         let(:params) do
           {
             options: {
               sendmailpath: '/foo',
-            }
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -S \/foo"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -S /foo"$})
         }
       end
 
-      context "with spamaddress set" do
-        context "with retain_recipients => true" do
+      context 'with spamaddress set' do
+        context 'with retain_recipients => true' do
           let(:params) do
             {
               options: {
                 spamaddress: {
                   address: 'foo@bar.com',
                   retain_recipients: true,
-                }
-              }
+                },
+              },
             }
           end
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-              .with_content(/^EXTRA_FLAGS=" -B foo@bar.com"$/)
+              .with_content(%r{^EXTRA_FLAGS=" -B foo@bar.com"$})
           }
         end
 
-        context "with retain_recipients => false" do
+        context 'with retain_recipients => false' do
           let(:params) do
             {
               options: {
                 spamaddress: {
                   address: 'foo@bar.com',
                   retain_recipients: false,
-                }
-              }
+                },
+              },
             }
           end
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-              .with_content(/^EXTRA_FLAGS=" -b foo@bar.com"$/)
+              .with_content(%r{^EXTRA_FLAGS=" -b foo@bar.com"$})
           }
         end
       end
 
-      context "with spamcflags set" do
+      context 'with spamcflags set' do
         let(:params) do
           {
             options: {
               spamcflags: 'foo',
-            }
+            },
           }
         end
 
         it {
           is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-            .with_content(/^EXTRA_FLAGS=" -- foo"$/)
+            .with_content(%r{^EXTRA_FLAGS=" -- foo"$})
         }
       end
 
-      context "with postfix_extension => false" do
+      context 'with postfix_extension => false' do
         let(:params) do
           {
             postfix_extension: false,
           }
         end
 
-        context "with socket file" do
+        context 'with socket file' do
           let(:params) do
             {
               postfix_extension: false,
@@ -301,24 +301,24 @@ SOCKET_OPTIONS="-g postfix"
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-              .with_content(/^SOCKET=\/foo$/)
+              .with_content(%r{^SOCKET=/foo$})
           }
         end
 
-        context "with inet port" do
+        context 'with inet port' do
           let(:params) do
             {
               postfix_extension: false,
               socket: {
                 'port' => 8895,
                 'host' => '127.0.0.1',
-              }
+              },
             }
           end
 
           it {
             is_expected.to contain_file('/etc/sysconfig/spamass-milter') \
-              .with_content(/^SOCKET=inet:8895@127\.0\.0\.1$/)
+              .with_content(%r{^SOCKET=inet:8895@127\.0\.0\.1$})
           }
         end
 

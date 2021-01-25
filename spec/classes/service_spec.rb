@@ -21,7 +21,7 @@ describe 'spamass_milter::service' do
         )
       }
 
-      context "with ensure => stopped" do
+      context 'with ensure => stopped' do
         let(:params) do
           {
             ensure: 'stopped',
@@ -40,7 +40,7 @@ describe 'spamass_milter::service' do
         }
       end
 
-      context "with enable => manual" do
+      context 'with enable => manual' do
         let(:params) do
           {
             enable: 'manual',
@@ -61,7 +61,7 @@ describe 'spamass_milter::service' do
         }
       end
 
-      context "with expand_user => true" do
+      context 'with expand_user => true' do
         let(:params) do
           {
             expand_user: true,
@@ -81,7 +81,7 @@ describe 'spamass_milter::service' do
           )
         }
 
-        context "with enable => manual" do
+        context 'with enable => manual' do
           let(:params) do
             {
               enable: 'manual',
