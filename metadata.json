@@ -1,6 +1,6 @@
 {
   "name": "tykeal-spamass_milter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Andrew Grimberg",
   "summary": "Installs and configures spamass-milter",
   "license": "Apache-2.0",
