@@ -5,6 +5,7 @@
   "summary": "Installs and configures spamass-milter",
   "license": "Apache-2.0",
   "source": "https://gitlab.com/tykeal/puppet-spamass_milter",
+  "project_page": "https://gitlab.com/puppet/puppet-spamass_milter",
   "issues_url": "https://gitlab.com/tykeal/puppet-spamass_milter/-/issues",
   "dependencies": [
     {
