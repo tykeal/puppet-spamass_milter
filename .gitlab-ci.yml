@@ -1,4 +1,5 @@
 ---
+# yamllint disable rule:line-length
 stages:
   - syntax
   - unit
@@ -24,7 +25,7 @@ syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore c
   script:
     - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
   variables:
-    PUPPET_GEM_VERSION: '~> 6'
+    PUPPET_GEM_VERSION: "~> 6"
 
 parallel_spec-Ruby 2.5.7-Puppet ~> 6:
   stage: unit
@@ -32,7 +33,7 @@ parallel_spec-Ruby 2.5.7-Puppet ~> 6:
   script:
     - bundle exec rake parallel_spec
   variables:
-    PUPPET_GEM_VERSION: '~> 6'
+    PUPPET_GEM_VERSION: "~> 6"
 
 parallel_spec-Ruby 2.4.5-Puppet ~> 5:
   stage: unit
@@ -40,5 +41,4 @@ parallel_spec-Ruby 2.4.5-Puppet ~> 5:
   script:
     - bundle exec rake parallel_spec
   variables:
-    PUPPET_GEM_VERSION: '~> 5'
-
+    PUPPET_GEM_VERSION: "~> 5"

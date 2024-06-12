@@ -16,15 +16,11 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "8"
-      ]
+      "operatingsystemrelease": ["8"]
     },
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "8"
-      ]
+      "operatingsystemrelease": ["8"]
     }
   ],
   "requirements": [
