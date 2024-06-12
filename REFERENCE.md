@@ -6,10 +6,10 @@
 
 ### Classes
 
-* [`spamass_milter`](#spamass_milter): Install and configure spamass-milter
-* [`spamass_milter::config`](#spamass_milterconfig): Configure spamass-milter
-* [`spamass_milter::install`](#spamass_milterinstall): Install spamass-milter
-* [`spamass_milter::service`](#spamass_milterservice): Manages the spamass-milter or spamass-milter-root service
+-   [`spamass_milter`](#spamass_milter): Install and configure spamass-milter
+-   [`spamass_milter::config`](#spamass_milterconfig): Configure spamass-milter
+-   [`spamass_milter::install`](#spamass_milterinstall): Install spamass-milter
+-   [`spamass_milter::service`](#spamass_milterservice): Manages the spamass-milter or spamass-milter-root service
 
 ## Classes
 
@@ -19,7 +19,7 @@ Installs and configures spamass-milter
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 include spamass_milter
@@ -30,9 +30,9 @@ include spamass_milter
 Configures the /etc/sysconfig/spamass-milter file based upon hiera data
 
 #param no_modify_subject
-  If set then spamass-milter will pass -m to disable the modification of
-  'Subject:' and 'Content-Type:' headers as well as the message body
-  (default: false, recommend true with option rejectscore set)
+If set then spamass-milter will pass -m to disable the modification of
+'Subject:' and 'Content-Type:' headers as well as the message body
+(default: false, recommend true with option rejectscore set)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ of the less privileged sa-milter
 
 Data type: `Boolean`
 
-If set then spamass-milter will pass -M to disable the 'X-Spam-*' headers
+If set then spamass-milter will pass -M to disable the 'X-Spam-\*' headers
 (default: false)
 
 ##### `socket`
@@ -108,36 +108,34 @@ Data type: `Optional[Struct[{
 
 Options structure for all supported flags and configuration
 debug: Configures the debug flags
-  Valid options are:
-    func, misc, net, poll, rcpt, spamc, str, uori, 1, 2, 3
+Valid options are:
+func, misc, net, poll, rcpt, spamc, str, uori, 1, 2, 3
 default_account: Configures the default user and default domain options
-  NOTE: Per the design of this module, if one is to be set, then both must
-  be set
+NOTE: Per the design of this module, if one is to be set, then both must
+be set
 ignore: An array of Stdlib::IP::Address objects that will be configured for
-  ignoring by spamass-milter
+ignoring by spamass-milter
 rejectcode: Change the default reject code from 5.7.1 to specified value
 rejectscore: Set spamass-milter to reject any mail that is at or above the
 specified
-  threshold
+threshold
 rejecttext: Change the text that is given upon mail reject from the default
-  of 'Blocked by SpamAssassin'
+of 'Blocked by SpamAssassin'
 sendmailpath: Specify the path to sendmail. This is only useful if
-  expand_user is set and spamass-milter is unable to find sendmail
+expand_user is set and spamass-milter is unable to find sendmail
 spamaddress: Send spam to specified address
-  address: email address to send to
-  retain_recipients: boolean to decide if the original recipients should be
-    retained or if X-Spam-Orig-To: headers should be inserted
+address: email address to send to
+retain_recipients: boolean to decide if the original recipients should be
+retained or if X-Spam-Orig-To: headers should be inserted
 spamcflags: A string of options to be passed on to spamc
-  NOTE: the spamass-milter option of -D should be put here as '-d host' as
-  the -D parameter is deprecated
+NOTE: the spamass-milter option of -D should be put here as '-d host' as
+the -D parameter is deprecated
 
-Default value: ``undef``
+Default value: `undef`
 
 ##### `no_modify_subject`
 
 Data type: `Boolean`
-
-
 
 ### `spamass_milter::install`
 
@@ -214,4 +212,3 @@ Data type: `Boolean`
 
 Configuration flag to determine which service should be used. This should
 follow spamass_milter::config::expand_user !
-
