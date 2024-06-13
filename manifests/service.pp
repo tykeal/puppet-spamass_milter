@@ -24,7 +24,7 @@ class spamass_milter::service (
 ) {
   # if $enable is not a boolean, we don't actually know what the ensure should
   # be
-  if is_bool($enable) {
+  if $enable.is_a(Boolean) {
     $_ensure = $ensure
   } else {
     $_ensure = undef

@@ -24,12 +24,12 @@ class spamass_milter::install (
 ) {
   if ($manage_package) {
     package { $package_name:
-      ensure => $ensure
+      ensure => $ensure,
     }
 
     if ($postfix_extension) {
       package { $postfix_extension_package:
-        ensure => $ensure
+        ensure => $ensure,
       }
     }
   }

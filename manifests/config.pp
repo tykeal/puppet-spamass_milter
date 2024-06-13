@@ -11,7 +11,7 @@
 # @param no_modify_headers
 #   If set then spamass-milter will pass -M to disable the 'X-Spam-*' headers
 #   (default: false)
-# #param no_modify_subject
+# @param no_modify_subject
 #   If set then spamass-milter will pass -m to disable the modification of
 #   'Subject:' and 'Content-Type:' headers as well as the message body
 #   (default: false, recommend true with option rejectscore set)
@@ -59,35 +59,35 @@ class spamass_milter::config (
   Boolean $no_modify_subject,
   Variant[
     Struct[{
-      path => Stdlib::Unixpath,
+        path => Stdlib::Unixpath,
     }],
     Struct[{
-      port => Stdlib::Port,
-      host => Stdlib::Host,
-    }]] $socket,
+        port => Stdlib::Port,
+        host => Stdlib::Host,
+  }]] $socket,
   Boolean $postfix_extension,
 
   # Optional
   Optional[Struct[{
-    debug           => Optional[Array[
-      Variant[
-        Enum['func', 'misc', 'net', 'poll', 'rcpt', 'spamc', 'str', 'uori'],
-        Integer[1, 3],
-    ]]],
-    default_account => Optional[Struct[{
-      defaultdomain => String,
-      defaultuser   => String,
-    }]],
-    ignore          => Optional[Array[Stdlib::IP::Address]],
-    rejectcode      => Optional[String],
-    rejectscore     => Optional[Integer],
-    rejecttext      => Optional[String],
-    sendmailpath    => Optional[Stdlib::Unixpath],
-    spamaddress     => Optional[Struct[{
-      address           => Pattern[/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/],
-      retain_recipients => Boolean,
-    }]],
-    spamcflags      => Optional[String],
+        debug           => Optional[Array[
+            Variant[
+              Enum['func', 'misc', 'net', 'poll', 'rcpt', 'spamc', 'str', 'uori'],
+              Integer[1, 3],
+        ]]],
+        default_account => Optional[Struct[{
+              defaultdomain => String,
+              defaultuser   => String,
+        }]],
+        ignore          => Optional[Array[Stdlib::IP::Address]],
+        rejectcode      => Optional[String],
+        rejectscore     => Optional[Integer],
+        rejecttext      => Optional[String],
+        sendmailpath    => Optional[Stdlib::Unixpath],
+        spamaddress     => Optional[Struct[{
+              address           => Pattern[/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/],
+              retain_recipients => Boolean,
+        }]],
+        spamcflags      => Optional[String],
   }]] $options = undef,
 ) {
   # if $expand_user is set then $options['default_account'] must be filled out
@@ -102,7 +102,7 @@ class spamass_milter::config (
     }
   }
 
-  file {'/etc/sysconfig/spamass-milter':
+  file { '/etc/sysconfig/spamass-milter':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
@@ -116,11 +116,11 @@ class spamass_milter::config (
         postfix_extension => $postfix_extension,
         options           => $options,
       },
-    )
+    ),
   }
 
   if $postfix_extension {
-    file {'/etc/sysconfig/spamass-milter-postfix':
+    file { '/etc/sysconfig/spamass-milter-postfix':
       ensure  => file,
       owner   => 'root',
       group   => 'root',
@@ -129,7 +129,7 @@ class spamass_milter::config (
         {
           socket => $socket,
         }
-      )
+      ),
     }
   }
 }
