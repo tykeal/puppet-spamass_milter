@@ -1,0 +1,51 @@
+---
+name: Verify
+
+# yamllint disable-line rule:truthy
+on: [push, pull_request]
+
+permissions: read-all
+
+jobs:
+  pdk-test:
+    strategy:
+      matrix:
+        puppet-version: ["7"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: PDK Validate
+        uses: puppets-epic-show-theatre/action-pdk-validate@4536bf103a3c2b92ddee02dfceab99a27ef2e83f # v1.1.0
+        with:
+          puppet-version: ${{ matrix.puppet-version }}
+      - name: PDK Test Unit
+        uses: puppets-epic-show-theatre/action-pdk-test-unit@237550c1eff52a3e457cf4d2d8193fb799823615 # v1.2.0
+        with:
+          puppet-version: ${{ matrix.puppet-version }}
+
+  commit-message:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Validate commit messages
+        uses: amannn/action-semantic-pull-request@cfb60706e18bc85e8aec535e3c577abe8f70378e # v5.5.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Requires the type to be capitlized, but accept any of the standard
+          # types
+          types: |
+            Fix
+            Feat
+            Chore
+            Docs
+            Style
+            Refactor
+            Perf
+            Test
+            Revert
+            CI
+            Build
+          validateSingleCommit: true
+          validateSingleCommitMatchesPrTitle: true
