@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
+    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b # frozen: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: check-executables-have-shebangs
@@ -44,6 +44,6 @@ repos:
       - id: ruby-validate
 
   - repo: https://github.com/rhysd/actionlint
-    rev: 4e683ab8014a63fafa117492a0c6053758e6d593  # frozen: v1.7.3
+    rev: 4e683ab8014a63fafa117492a0c6053758e6d593 # frozen: v1.7.3
     hooks:
       - id: actionlint
