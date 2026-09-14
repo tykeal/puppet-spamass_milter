@@ -6,10 +6,10 @@
 
 ### Classes
 
--   [`spamass_milter`](#spamass_milter): Install and configure spamass-milter
--   [`spamass_milter::config`](#spamass_milterconfig): Configure spamass-milter
--   [`spamass_milter::install`](#spamass_milterinstall): Install spamass-milter
--   [`spamass_milter::service`](#spamass_milterservice): Manages the spamass-milter or spamass-milter-root service
+- [`spamass_milter`](#spamass_milter): Install and configure spamass-milter
+- [`spamass_milter::config`](#spamass_milterconfig): Configure spamass-milter
+- [`spamass_milter::install`](#spamass_milterinstall): Install spamass-milter
+- [`spamass_milter::service`](#spamass_milterservice): Manages the spamass-milter or spamass-milter-root service
 
 ## Classes
 
