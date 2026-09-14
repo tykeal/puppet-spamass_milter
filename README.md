@@ -27,16 +27,16 @@ same time.
 
 ### Setup Requirements
 
--   `puppetlabs/stdlib` is required for this module to work
+- `puppetlabs/stdlib` is required for this module to work
 
 ### Beginning with spamass_milter
 
 This module is designed to "just work". Configuration is done against the
 following hiera locations:
 
--   `spamass_milter::install`
--   `spamass_milter::config`
--   `spamass_milter::service`
+- `spamass_milter::install`
+- `spamass_milter::config`
+- `spamass_milter::service`
 
 ## Usage
 
